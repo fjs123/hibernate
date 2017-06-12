@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="cn.itcast.one2many.Customer" table="itcast_customer">
+		<id name="id" column="id">
+			<!-- 主键生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		<property name="cname" length="32">
+			<!-- <column name="name" sql-type="varchar(32)"></column> -->
+		</property>
+		<!-- 如果属性和字段相同，column可以省略 -->
+		<property name="description" />
+		
+		<!-- 描述客户和订单的一对多关系 -->
+		<!-- 
+			inverse="true"表示由对方（订单方）负责维护外键关系
+		 -->
+		<set inverse="true" cascade="save-update,delete,delete-orphan" name="orders">
+			<!-- key表示在多方表（Orders）中的外键 -->
+			<key column="customerId"></key>
+			<!-- 多方类全路径 -->
+			<one-to-many class="cn.itcast.one2many.Order"/>
+		</set>
+	</class>
+	
+</hibernate-mapping>

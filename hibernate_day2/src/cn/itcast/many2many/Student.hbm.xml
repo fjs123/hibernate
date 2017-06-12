@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 描述User类对应user表 -->
+	<class  name="cn.itcast.many2many.Student" table="itcast_student">
+		<!-- id属性对应id字段 -->
+		<id name="id" column="id">
+			<!-- 主键生成策略 -->
+			<generator class="identity"></generator>
+		</id>
+		<property name="sname" length="32">
+			<!-- <column name="name" sql-type="varchar(32)"></column> -->
+		</property>
+		
+		<!-- 描述学生和课程的多对多关系 -->
+		<!-- table为第三张关系表名 -->
+		<set cascade="delete" name="courses" table="student_course">
+			<!-- 当前表 在第三张关系表中的外键-->
+			<key column="studentId"></key>
+			<!-- courseId为对方（课程表）在第三张关系表中的外键 -->
+			<many-to-many class="cn.itcast.many2many.Course" column="courseId"></many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>
