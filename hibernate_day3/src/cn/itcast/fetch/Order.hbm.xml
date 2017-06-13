@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="cn.itcast.fetch.Order" table="itcast_order">
+		<id name="id" column="id">
+			<!-- 主键生成策略 -->
+			<generator class="native"></generator>
+		</id>
+		<property name="orderNumber" length="32">
+			<!-- <column name="name" sql-type="varchar(32)"></column> -->
+		</property>
+		<!-- 如果属性和字段相同，column可以省略 -->
+		<property name="price" />
+		
+		<!-- 描述订单和客户的多对一关系 -->
+		<!-- 
+			class:一方类的全路径
+			column:表示在多方表（Orders）中的外键 
+			cascade:级联操作
+		 -->
+		<many-to-one fetch="select" lazy="proxy" name="customer" class="cn.itcast.fetch.Customer" column="customerId"></many-to-one>
+	</class>
+	
+</hibernate-mapping>
